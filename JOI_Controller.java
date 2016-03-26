@@ -9,33 +9,47 @@ public class JOI_Controller {
 		m = new JOI_Model(this);
 		v = new JOI_View(this);
 		v.addCustomKeyListener(new MyKeyListener());
+		
+		restart();
 	}
 
 	public void restart() {
-		// TODO Auto-generated method stub
+		m.startOver();
+		v.redraw(m.getCombinedView());
 		
 	}
 
 	public char[][] getArr() {
-		// TODO Auto-generated method stub
-		return null;
+		return m.getCombinedView();
 	}
 
 	public int numRows() {
-		// TODO Auto-generated method stub
-		return 0;
+		return m.numRows;
 	}
 
 	public int numCols() {
-		// TODO Auto-generated method stub
-		return 0;
+		return m.numCols;
 	}
 	
 	private class MyKeyListener extends KeyAdapter {
 		public void keyReleased(KeyEvent e) {
-			if (e.getKeyChar() == 'a') {
-				AINextMove();
+			if (e.getKeyChar() == 'w') {
+				m.moveUp();
+				v.redraw(m.getCombinedView());
 			}
+			if (e.getKeyChar() == 'a') {
+				m.moveLeft();
+				v.redraw(m.getCombinedView());
+			}
+			if (e.getKeyChar() == 's') {
+				m.moveDown();
+				v.redraw(m.getCombinedView());
+			}
+			if (e.getKeyChar() == 'd') {
+				m.moveRight();
+				v.redraw(m.getCombinedView());
+			}
+			m.printBoard(m.getCombinedView());
 
 		}
 	}
