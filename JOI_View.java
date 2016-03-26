@@ -35,8 +35,7 @@ public class JOI_View implements ActionListener{
 	MyDrawingPanel drawingPanel;
 	private int dim = 40;
 	BufferedImage pic[][];
-	//BufferedImage BLANK, COVERED, MINE, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, FLAGGED, QUESTION;
-	private int offset;
+	BufferedImage GROUND,PLAYER,UNWALKABLE;
 	JLabel score;
 	Timer timer;
 	int time = 0;
@@ -129,8 +128,14 @@ public class JOI_View implements ActionListener{
 		
 
 		MyDrawingPanel(char[][] arr) {
-			//load images
-
+			pic = new BufferedImage[numRows][numCols];
+			try {
+				UNWALKABLE = ImageIO.read(new File("tree.gif"));;
+				GROUND = ImageIO.read(new File("ground.gif"));
+				PLAYER = ImageIO.read(new File("player.gif"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		public void paintComponent(Graphics g) {
@@ -143,7 +148,7 @@ public class JOI_View implements ActionListener{
 			// set the pics based on the controller.getArr()
 			char[][] arr = c.getArr();
 			for (int row = 0; row < numRows; row++) {
-				for (int col= 0; col < numCols; col++) {
+				for (int col = 0; col < numCols; col++) {
 
 					char test = arr[row][col];
 					pic[row][col] = getValueOf(test);
@@ -161,18 +166,38 @@ public class JOI_View implements ActionListener{
 
 		}
 
-		private BufferedImage getValueOf(char test) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
 	}
 
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+	}
+
+	public void redraw(char[][] c) {
+		for(int i = 0; i < c.length; i++){
+			for(int j = 0; j < c[0].length; j++){
+				setPic(i,j,c[i][j]);
+			}
+		}
+		drawingPanel.paintComponent(drawingPanel.getGraphics());
 		
+	}
+
+	private void setPic(int row, int col, char state) {
+		pic[row][col] = getValueOf(state);
+	}
+
+	private BufferedImage getValueOf(char state) {
+		if(state == '*'){
+			return PLAYER;
+		}
+		if(state == '-'){
+			return GROUND;
+		}
+		if(state == 'x'){
+			return UNWALKABLE;
+		}
+		return null;
 	}
 	
 }
