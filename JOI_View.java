@@ -33,7 +33,7 @@ public class JOI_View implements ActionListener{
 	JOI_Controller c;
 	JFrame window;
 	MyDrawingPanel drawingPanel;
-	private int dim = 40;
+	private int dim = 20;
 	BufferedImage pic[][];
 	BufferedImage GROUND,PLAYER,UNWALKABLE;
 	JLabel score;
