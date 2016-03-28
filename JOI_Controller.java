@@ -2,12 +2,10 @@
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.*;
-
 public class JOI_Controller {
 	JOI_Model m;
 	JOI_View v;
 
-	
 	public JOI_Controller(){
 		m = new JOI_Model(this);
 		v = new JOI_View(this);

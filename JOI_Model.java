@@ -18,7 +18,6 @@ public class JOI_Model {
 
 	public char[][] background;
 	public char[][] sprites;
-	
 	public int time = 0;
 
 	public JOI_Model(JOI_Controller c) {
@@ -28,8 +27,13 @@ public class JOI_Model {
 	
 	}
 
-	public void startOver() {
 
+	public JOI_Model(JOI_Controller c) {
+		this.c = c;
+		startOver();
+	}
+
+	public void startOver() {
 		// get combined view
 		Random r = new Random();
 
@@ -144,7 +148,7 @@ public class JOI_Model {
 	public boolean ifWalkable(int row, int col){
 		return row >= 0 && row < numRows && col >= 0 && col < numCols && background[row][col] != UNWALKABLE;
 	}
-	
+
 	public void timeElapsed(int t){
 		time = t;
 		if(time % 2 == 0){
@@ -169,7 +173,7 @@ public class JOI_Model {
 			background[row][col] = obj;
 		}
 	}
-	
+
 	public void printBoard(char[][] c){
 		for(int row = 0; row < numRows; row++){
 			for(int col = 0; col < numCols; col++){

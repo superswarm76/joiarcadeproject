@@ -141,7 +141,6 @@ public class JOI_View implements ActionListener{
 		}
 
 		public void paintComponent(Graphics g) {
-
 			// set the pics based on the controller.getArr()
 			char[][] arr = c.getArr();
 			for (int row = 0; row < numRows; row++) {
