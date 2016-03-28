@@ -139,12 +139,6 @@ public class JOI_View implements ActionListener{
 		}
 
 		public void paintComponent(Graphics g) {
-
-			g.setColor(new Color(168, 172, 173));
-			g.fillRect(2, 2, this.getWidth() - 2, this.getHeight() - 2);
-
-			g.setColor(new Color(120, 126, 128));
-
 			// set the pics based on the controller.getArr()
 			char[][] arr = c.getArr();
 			for (int row = 0; row < numRows; row++) {

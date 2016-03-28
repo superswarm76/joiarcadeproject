@@ -1,0 +1,9 @@
+README.md
+*.BlueJ
+*.ctxt
+*.class
+.project
+.DS_Store
+.classpath
+bin
+.settings
