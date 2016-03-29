@@ -35,10 +35,11 @@ public class JOI_View implements ActionListener{
 	MyDrawingPanel drawingPanel;
 	private int dim = 20;
 	BufferedImage pic[][];
-	BufferedImage GROUND,PLAYER,UNWALKABLE;
+	BufferedImage GROUND,PLAYER,UNWALKABLE, COIN, DIAMOND;
 	JLabel score;
 	Timer timer;
 	int time = 0;
+	int gameScore = 0;
 	
 	public JOI_View(JOI_Controller c){
 		this.c = c;
@@ -99,7 +100,7 @@ public class JOI_View implements ActionListener{
 		panel_2.setBounds(20, 500, 400, 70);
 		main.add(panel_2);
 
-		score = new JLabel(timePassed.getText());
+		score = new JLabel(gameScore + "");
 		panel_2.add(score);
 		
 
@@ -120,6 +121,11 @@ public class JOI_View implements ActionListener{
 		window.addKeyListener(m);
 	}
 	
+	public void updateScore(int i){
+		gameScore += i;
+		score.setText(gameScore + "");
+		System.out.println("increase score");
+	}
 	
 	private class MyDrawingPanel extends JPanel {
 		static final long serialVersionUID = 1234567890L;
@@ -135,6 +141,8 @@ public class JOI_View implements ActionListener{
 				UNWALKABLE = ImageIO.read(new File("tree.gif"));;
 				GROUND = ImageIO.read(new File("ground.gif"));
 				PLAYER = ImageIO.read(new File("player.gif"));
+				COIN = ImageIO.read(new File("coin.gif"));
+				DIAMOND = ImageIO.read(new File("diamond.gif"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -192,6 +200,12 @@ public class JOI_View implements ActionListener{
 		}
 		if(state == 'x'){
 			return UNWALKABLE;
+		}
+		if(state == 'c'){
+			return COIN;
+		}
+		if(state == 'd'){
+			return DIAMOND;
 		}
 		return null;
 	}

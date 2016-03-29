@@ -4,29 +4,22 @@ public class JOI_Model {
 	// newProjectile function
 	// newCoin
 	// coinCollected (controller needs to make timer delay smaller)
-	// keep track of score?
-	// nextFrame function where the projectiles move linearly
-	// moveUp...etc function
 	JOI_Controller c;
 	public final static char PLAYER = '*';
 	public final static char GROUND = '-';
 	public final static char UNWALKABLE = 'x';
 	public final static char BOULDER = 'o';
 	public final static char NOTHING = ' ';
+	public final static char COIN = 'c';
+	public final static char DIAMOND = 'd';
 	public final int numRows = 20;
 	public final int numCols = 20;
+	public final int maxTree = 40;
+	public int numTree = 0;
 
 	public char[][] background;
 	public char[][] sprites;
 	public int time = 0;
-
-	public JOI_Model(JOI_Controller c) {
-
-		this.c = c;
-		startOver();
-	
-	}
-
 
 	public JOI_Model(JOI_Controller c) {
 		this.c = c;
@@ -91,6 +84,7 @@ public class JOI_Model {
 		int row = getRow();
 		int col = getCol();
 		if(ifWalkable(row -1, col)){
+			checkCollision(row - 1, col);
 			sprites[row - 1][col] = PLAYER;
 			sprites[row][col] = NOTHING;
 		}
@@ -100,6 +94,7 @@ public class JOI_Model {
 		int row = getRow();
 		int col = getCol();
 		if(ifWalkable(row +1, col)){
+			checkCollision(row + 1, col);
 			sprites[row + 1][col] = PLAYER;
 			sprites[row][col] = NOTHING;
 		}
@@ -109,6 +104,7 @@ public class JOI_Model {
 		int row = getRow();
 		int col = getCol();
 		if(ifWalkable(row, col + 1)){
+			checkCollision(row , col + 1);
 			sprites[row][col + 1] = PLAYER;
 			sprites[row][col] = NOTHING;
 		}
@@ -118,6 +114,7 @@ public class JOI_Model {
 		int row = getRow();
 		int col = getCol();
 		if(ifWalkable(row, col - 1)){
+			checkCollision(row , col - 1);
 			sprites[row][col - 1] = PLAYER;
 			sprites[row][col] = NOTHING;
 		}
@@ -151,8 +148,15 @@ public class JOI_Model {
 
 	public void timeElapsed(int t){
 		time = t;
-		if(time % 2 == 0){
+		if(time % 1 == 0 && numTree < maxTree){
 			addObject(UNWALKABLE);
+			numTree++;
+		}
+		if(time % 3 == 0){
+			addObject(COIN);
+		}
+		if(time % 10 == 0){
+			addObject(DIAMOND);
 		}
 	}
 	
@@ -163,14 +167,26 @@ public class JOI_Model {
 		int col = r.nextInt(numCols);
 		System.out.println(row + " " + col);
 
-		if (background[row][col] != obj) {
-			background[row][col] = obj;
-		} else {
-			while (background[row][col] == obj) {
-				row = r.nextInt(numRows);
-				col = r.nextInt(numCols);
+		if(obj == UNWALKABLE){
+			if (background[row][col] == GROUND && sprites[row][col] == NOTHING) {
+				background[row][col] = obj;
+			} else {
+				while (background[row][col] != GROUND || sprites[row][col] != NOTHING) {
+					row = r.nextInt(numRows);
+					col = r.nextInt(numCols);
+				}
+				background[row][col] = obj;
 			}
-			background[row][col] = obj;
+		}else{
+			if (sprites[row][col] == NOTHING && background[row][col] == GROUND) {
+				sprites[row][col] = obj;
+			} else {
+				while (sprites[row][col] != NOTHING || background[row][col] != GROUND) {
+					row = r.nextInt(numRows);
+					col = r.nextInt(numCols);
+				}
+				sprites[row][col] = obj;
+			}
 		}
 	}
 
@@ -183,4 +199,14 @@ public class JOI_Model {
 		}
 		System.out.println("\n\n\n");
 	}
+	
+	public void checkCollision(int row, int col){
+		if(sprites[row][col] == DIAMOND){
+			c.increaseScore(100);
+		}
+		if(sprites[row][col] == COIN){
+			c.increaseScore(5);
+		}
+	}
+	
 }

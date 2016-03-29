@@ -54,8 +54,12 @@ public class JOI_Controller {
 				m.moveRight();
 				v.redraw(m.getCombinedView());
 			}
-			m.printBoard(m.getCombinedView());
 
 		}
+	}
+
+	public void increaseScore(int i) {
+		v.updateScore(i);
+		
 	}
 }
