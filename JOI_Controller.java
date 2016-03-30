@@ -38,7 +38,7 @@ public class JOI_Controller {
 	
 	private class MyKeyListener extends KeyAdapter {
 		public void keyReleased(KeyEvent e) {
-			if (e.getKeyChar() == 'w') {
+			if (e.getKeyChar() == 328) {
 				m.moveUp();
 				v.redraw(m.getCombinedView());
 			}
