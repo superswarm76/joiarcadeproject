@@ -46,7 +46,7 @@ public class JOI_Controller {
 				m.moveLeft();
 				v.redraw(m.getCombinedView());
 			}
-			if (e.getKeyChar() == 's') {
+			if (e.getKeyChar() == 336) {
 				m.moveDown();
 				v.redraw(m.getCombinedView());
 			}
@@ -56,6 +56,8 @@ public class JOI_Controller {
 			}
 
 		}
+		//e.getKeychar() == 'w'
+		
 	}
 
 	public void increaseScore(int i) {
