@@ -1,4 +1,3 @@
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.*;
@@ -16,6 +15,7 @@ public class JOI_Controller {
 
 	public void timePassed(int time){
 		m.timeElapsed(time);
+		v.redraw(m.getCombinedView());
 	}
 	
 	public void restart() {

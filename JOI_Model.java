@@ -16,10 +16,17 @@ public class JOI_Model {
     public final int numCols = 20;
     public final int maxTree = 40;
     public int numTree = 0;
+    public final int UP = 0;
+	public final int DOWN = 1;
+	public final int LEFT = 2;
+	public final int RIGHT = 3;
 
     public char[][] background;
     public char[][] sprites;
+    public int[][] projectiles;
     public int time = 0;
+    Random r = new Random();
+    
 
     public JOI_Model(JOI_Controller c) {
         this.c = c;
@@ -63,6 +70,13 @@ public class JOI_Model {
                 }
             }
         }
+        
+        projectiles = new int[numRows][numCols];
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numCols; j++) {
+                projectiles[i][j] = -1;
+            }
+        }
     }
 
     public char[][] getCombinedView() {
@@ -70,13 +84,16 @@ public class JOI_Model {
         char[][] test = new char[numRows][numCols];
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < numCols; j++) {
-                if (sprites[i][j] == NOTHING) {
+            	if(projectiles[i][j] != -1){
+            		test[i][j] = BOULDER;
+            	}else if (sprites[i][j] == NOTHING) {
                     test[i][j] = background[i][j];
                 } else {
                     test[i][j] = sprites[i][j];
                 }
             }
         }
+        printBoard(test);
         return test;
     }
 
@@ -150,10 +167,12 @@ public class JOI_Model {
         time = t;
         if(time % 1 == 0 && numTree < maxTree){
             addObject(UNWALKABLE);
+            updateRocks();
             numTree++;
         }
         if(time % 3 == 0){
             addObject(COIN);
+            newRock();
         }
         if(time % 10 == 0){
             addObject(DIAMOND);
@@ -162,7 +181,7 @@ public class JOI_Model {
     
     public void addObject(char obj){
         
-        Random r = new Random();
+        
         int row = r.nextInt(numRows);
         int col = r.nextInt(numCols);
         System.out.println(row + " " + col);
@@ -209,4 +228,60 @@ public class JOI_Model {
         }
     }
     
+    public void newRock(){
+    	int test = r.nextInt(4);
+    	int row = -1;
+    	int col = -1;
+
+    	switch (test){
+		case 0:
+			col = r.nextInt(numCols);
+			row = numRows - 1;
+			break;
+    	case 1:
+			row = 0;
+			col = r.nextInt(numCols);
+			break;
+	    case 2:
+			row = r.nextInt(numRows);
+			col = numCols - 1;
+			break;
+		case 3:
+			row = r.nextInt(numRows);
+			col = 0;
+			break;
+		}
+    	
+    	if(row != -1 && col != -1){
+    		projectiles[row][col] = test;
+    	}
+    	System.out.println("added new rock");
+    }
+    
+    public void updateRocks(){
+    	for(int row = 0; row < numRows; row++){
+    		for(int col = 0; col < numCols; col++){
+    			try{
+	    			if(projectiles[row][col] == UP){
+	    				projectiles[row - 1][col] = UP;
+	    				projectiles[row][col] = -1;
+	    			}
+	    			if(projectiles[row][col] == DOWN){
+	    				projectiles[row + 1][col] = DOWN;
+	    				projectiles[row][col] = -1;
+	    			}
+	    			if(projectiles[row][col] == RIGHT){
+	    				projectiles[row][col + 1] = RIGHT;
+	    				projectiles[row][col] = -1;
+	    			}
+	    			if(projectiles[row][col] == LEFT){
+	    				projectiles[row][col - 1] = LEFT;
+	    				projectiles[row][col] = -1;
+	    			}
+    			}catch(Exception e){
+    				projectiles[row][col] = -1;
+    			}
+    		}
+    	}
+    }
 }
