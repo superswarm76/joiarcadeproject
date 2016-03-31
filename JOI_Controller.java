@@ -38,25 +38,24 @@ public class JOI_Controller {
 	
 	private class MyKeyListener extends KeyAdapter {
 		public void keyReleased(KeyEvent e) {
-			if (e.getKeyChar() == 38) {
+			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				m.moveUp();
 				v.redraw(m.getCombinedView());
 			}
-			if (e.getKeyChar() == 37) {
+			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 				m.moveLeft();
 				v.redraw(m.getCombinedView());
 			}
-			if (e.getKeyChar() == 40) {
+			if (e.getKeyCode() == KeyEvent.VK_DOWN){
 				m.moveDown();
 				v.redraw(m.getCombinedView());
 			}
-			if (e.getKeyChar() == 39) {
+			if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 				m.moveRight();
 				v.redraw(m.getCombinedView());
 			}
 
 		}
-		//e.getKeychar() == 'w'
 		
 	}
 
