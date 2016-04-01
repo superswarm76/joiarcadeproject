@@ -84,16 +84,17 @@ public class JOI_Model {
         char[][] test = new char[numRows][numCols];
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < numCols; j++) {
-            	if(projectiles[i][j] != -1){
-            		test[i][j] = BOULDER;
-            	}else if (sprites[i][j] == NOTHING) {
+            	if (sprites[i][j] == NOTHING && projectiles[i][j] == -1) {
                     test[i][j] = background[i][j];
                 } else {
                     test[i][j] = sprites[i][j];
                 }
+            	if(projectiles[i][j] != -1){
+            		test[i][j] = BOULDER;
+            	}
             }
         }
-        printBoard(test);
+        printBoard(projectiles);
         return test;
     }
 
@@ -165,10 +166,15 @@ public class JOI_Model {
 
     public void timeElapsed(int t){
         time = t;
-        if(time % 1 == 0 && numTree < maxTree){
-            addObject(UNWALKABLE);
-            updateRocks();
-            numTree++;
+        if(gameOver()){
+        	c.gameOver();
+        }
+        if(time % 1 == 0){
+        	updateRocks();
+        	if(numTree < maxTree){
+        		addObject(UNWALKABLE);
+        		numTree++;
+        	}
         }
         if(time % 3 == 0){
             addObject(COIN);
@@ -184,7 +190,6 @@ public class JOI_Model {
         
         int row = r.nextInt(numRows);
         int col = r.nextInt(numCols);
-        System.out.println(row + " " + col);
 
         if(obj == UNWALKABLE){
             if (background[row][col] == GROUND && sprites[row][col] == NOTHING) {
@@ -209,7 +214,7 @@ public class JOI_Model {
         }
     }
 
-    public void printBoard(char[][] c){
+    public void printBoard(int[][] c){
         for(int row = 0; row < numRows; row++){
             for(int col = 0; col < numCols; col++){
                 System.out.print(" " + c[row][col]);
@@ -226,6 +231,7 @@ public class JOI_Model {
         if(sprites[row][col] == COIN){
             c.increaseScore(5);
         }
+        c.goFaster();
     }
     
     public void newRock(){
@@ -255,7 +261,6 @@ public class JOI_Model {
     	if(row != -1 && col != -1){
     		projectiles[row][col] = test;
     	}
-    	System.out.println("added new rock");
     }
     
     public void updateRocks(){
@@ -284,4 +289,9 @@ public class JOI_Model {
     		}
     	}
     }
+    
+    public boolean gameOver(){
+    	return projectiles[getRow()][getCol()] != -1;
+    }
+
 }

@@ -33,9 +33,10 @@ public class JOI_View implements ActionListener{
 	JOI_Controller c;
 	JFrame window;
 	MyDrawingPanel drawingPanel;
+	JLabel timePassed;
 	private int dim = 20;
 	BufferedImage pic[][];
-	BufferedImage GROUND,PLAYER,UNWALKABLE, COIN, DIAMOND;
+	BufferedImage GROUND,PLAYER,UNWALKABLE, COIN, DIAMOND, BOULDER;
 	JLabel score;
 	Timer timer;
 	int time = 0;
@@ -89,7 +90,7 @@ public class JOI_View implements ActionListener{
 		panel_1.setBorder(new TitledBorder(null, "Time ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		main.add(panel_1);
 
-		JLabel timePassed = new JLabel(Integer.toString(time));
+		timePassed = new JLabel(Integer.toString(time));
 		panel_1.add(timePassed);
 
 		JPanel panel_2 = new JPanel();
@@ -143,6 +144,7 @@ public class JOI_View implements ActionListener{
 				PLAYER = ImageIO.read(new File("player.gif"));
 				COIN = ImageIO.read(new File("coin.gif"));
 				DIAMOND = ImageIO.read(new File("diamond.gif"));
+				BOULDER = ImageIO.read(new File("boulder.gif"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -170,6 +172,21 @@ public class JOI_View implements ActionListener{
 
 		}
 
+	}
+	
+	public void gameOver(){
+		timer.stop();
+		int play = JOptionPane.showConfirmDialog(drawingPanel, "Your Score is " + score.getText() + " ! Play again?");
+		if(play == JOptionPane.YES_OPTION){
+			gameScore = 0;
+			c.restart();
+			time = 0;
+			timePassed.setText(Integer.toString(time));
+			updateScore(gameScore);
+			timer.start();
+		}else{
+			System.exit(0);
+		}
 	}
 
 
@@ -206,6 +223,9 @@ public class JOI_View implements ActionListener{
 		}
 		if(state == 'd'){
 			return DIAMOND;
+		}
+		if(state == 'o'){
+			return BOULDER;
 		}
 		return null;
 	}

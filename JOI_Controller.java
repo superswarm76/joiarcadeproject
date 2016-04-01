@@ -15,12 +15,15 @@ public class JOI_Controller {
 
 	public void timePassed(int time){
 		m.timeElapsed(time);
-		v.redraw(m.getCombinedView());
 	}
 	
 	public void restart() {
 		m.startOver();
 		v.redraw(m.getCombinedView());
+		
+	}
+	
+	public void goFaster(){
 		
 	}
 
@@ -63,4 +66,9 @@ public class JOI_Controller {
 		v.updateScore(i);
 		
 	}
+
+	public void gameOver() {
+		v.gameOver();
+	}
+
 }
