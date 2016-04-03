@@ -271,14 +271,6 @@ public class JOI_Model {
 	    				projectiles[row - 1][col] = UP;
 	    				projectiles[row][col] = -1;
 	    			}
-	    			if(projectiles[row][col] == DOWN){
-	    				projectiles[row + 1][col] = DOWN;
-	    				projectiles[row][col] = -1;
-	    			}
-	    			if(projectiles[row][col] == RIGHT){
-	    				projectiles[row][col + 1] = RIGHT;
-	    				projectiles[row][col] = -1;
-	    			}
 	    			if(projectiles[row][col] == LEFT){
 	    				projectiles[row][col - 1] = LEFT;
 	    				projectiles[row][col] = -1;
@@ -286,6 +278,21 @@ public class JOI_Model {
     			}catch(Exception e){
     				projectiles[row][col] = -1;
     			}
+    		}
+    	}
+    	for(int row = numRows - 1; row >= 0; row--){
+    		for(int col = numCols - 1; col >= 0; col--){
+    			try {
+					if(projectiles[row][col] == DOWN){
+						projectiles[row + 1][col] = DOWN;
+						projectiles[row][col] = -1;
+					}
+					if(projectiles[row][col] == RIGHT){
+						projectiles[row][col + 1] = RIGHT;
+						projectiles[row][col] = -1;
+					}
+				} catch (Exception e) {
+					projectiles[row][col] = -1;				}
     		}
     	}
     }
