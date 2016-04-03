@@ -15,6 +15,7 @@ public class JOI_Model {
     public final int numRows = 20;
     public final int numCols = 20;
     public final int maxTree = 40;
+    public final int maxCoins = 10;
     public int numTree = 0;
     public final int UP = 0;
 	public final int DOWN = 1;
@@ -94,7 +95,6 @@ public class JOI_Model {
             	}
             }
         }
-        printBoard(projectiles);
         return test;
     }
 
@@ -171,17 +171,21 @@ public class JOI_Model {
         }
         if(time % 1 == 0){
         	updateRocks();
-        	if(numTree < maxTree){
+        }
+        if(time % 6 == 0){
+            if(numCoins() < maxCoins){
+            	addObject(COIN);
+            }
+            newRock();
+            if(numTree < maxTree){
         		addObject(UNWALKABLE);
         		numTree++;
         	}
         }
-        if(time % 3 == 0){
-            addObject(COIN);
-            newRock();
-        }
-        if(time % 10 == 0){
-            addObject(DIAMOND);
+        if(time % 20 == 0){
+        	if(numCoins() < maxCoins){
+            	addObject(DIAMOND);
+            }
         }
     }
     
@@ -299,6 +303,18 @@ public class JOI_Model {
     
     public boolean gameOver(){
     	return projectiles[getRow()][getCol()] != -1;
+    }
+    
+    public int numCoins(){
+    	int count = 0;
+    	for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numCols; j++) {
+            	if(sprites[i][j] != NOTHING && sprites[i][j] != PLAYER){
+            		count++;
+            	}
+            }
+        }
+    	return count;
     }
 
 }

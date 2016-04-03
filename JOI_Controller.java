@@ -24,7 +24,7 @@ public class JOI_Controller {
 	}
 	
 	public void goFaster(){
-		
+		v.setDelay(-1);
 	}
 
 	public char[][] getArr() {

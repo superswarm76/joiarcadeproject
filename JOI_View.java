@@ -108,7 +108,7 @@ public class JOI_View implements ActionListener{
 		window.getContentPane().add(main);
 		window.setVisible(true);
 		
-		timer = new Timer(1000,this);
+		timer = new Timer(250,this);
 		timer.start();
 		timer.addActionListener(e -> {
 			time++;
@@ -228,6 +228,11 @@ public class JOI_View implements ActionListener{
 			return BOULDER;
 		}
 		return null;
+	}
+
+	public void setDelay(int i) {
+		timer.setDelay(timer.getDelay() + i);
+		
 	}
 	
 }
