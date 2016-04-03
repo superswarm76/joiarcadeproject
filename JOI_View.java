@@ -112,7 +112,7 @@ public class JOI_View implements ActionListener{
 		timer.start();
 		timer.addActionListener(e -> {
 			time++;
-			timePassed.setText(Integer.toString(time));
+			timePassed.setText(Integer.toString(time/4));
 			c.timePassed(time);
 			drawingPanel.paintComponent(drawingPanel.getGraphics());
 		});
@@ -125,7 +125,6 @@ public class JOI_View implements ActionListener{
 	public void updateScore(int i){
 		gameScore += i;
 		score.setText(gameScore + "");
-		System.out.println("increase score");
 	}
 	
 	private class MyDrawingPanel extends JPanel {
@@ -151,7 +150,6 @@ public class JOI_View implements ActionListener{
 		}
 
 		public void paintComponent(Graphics g) {
-			// set the pics based on the controller.getArr()
 			char[][] arr = c.getArr();
 			for (int row = 0; row < numRows; row++) {
 				for (int col = 0; col < numCols; col++) {
@@ -161,12 +159,16 @@ public class JOI_View implements ActionListener{
 
 				}
 			}
-
 			for (int i = 0; i < numRows; i++) {
 				for (int j = 0; j < numCols; j++) {
 					int x = j * dim;
 					int y = i * dim;
-					g.drawImage(pic[i][j], x, y, this.getWidth() / numRows, this.getHeight() / numCols, null);
+					if(pic[i][j] == UNWALKABLE || pic[i][j] == DIAMOND){
+						g.drawImage(GROUND, x, y, this.getWidth() / numRows, this.getHeight() / numCols, null);
+						g.drawImage(pic[i][j], x, y, this.getWidth() / numRows, this.getHeight() / numCols, null);
+					} else {
+						g.drawImage(pic[i][j], x, y, this.getWidth() / numRows, this.getHeight() / numCols, null);
+					}
 				}
 			}
 

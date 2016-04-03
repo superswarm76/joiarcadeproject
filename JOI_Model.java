@@ -95,6 +95,7 @@ public class JOI_Model {
             	}
             }
         }
+        System.out.println();
         return test;
     }
 
