@@ -164,7 +164,7 @@ public class JOI_View implements ActionListener{
 				for (int j = 0; j < numCols; j++) {
 					int x = j * dim;
 					int y = i * dim;
-					if(pic[i][j] == UNWALKABLE || pic[i][j] == DIAMOND){
+					if(pic[i][j] != GROUND){
 						g.drawImage(GROUND, x, y, this.getWidth() / numRows, this.getHeight() / numCols, null);
 						g.drawImage(pic[i][j], x, y, this.getWidth() / numRows, this.getHeight() / numCols, null);
 					} else {
