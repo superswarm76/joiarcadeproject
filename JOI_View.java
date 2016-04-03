@@ -39,6 +39,7 @@ public class JOI_View implements ActionListener{
 	BufferedImage GROUND,PLAYER,UNWALKABLE, COIN, DIAMOND, BOULDER;
 	JLabel score;
 	Timer timer;
+	int MIN_DELAY = 200;
 	int time = 0;
 	int gameScore = 0;
 	
@@ -139,11 +140,11 @@ public class JOI_View implements ActionListener{
 			pic = new BufferedImage[numRows][numCols];
 			try {
 				UNWALKABLE = ImageIO.read(new File("tree.gif"));;
-				GROUND = ImageIO.read(new File("ground.gif"));
-				PLAYER = ImageIO.read(new File("player.gif"));
-				COIN = ImageIO.read(new File("coin.gif"));
+				GROUND = ImageIO.read(new File("sand.gif"));
+				PLAYER = ImageIO.read(new File("player_2.gif"));
+				COIN = ImageIO.read(new File("coin_2.gif"));
 				DIAMOND = ImageIO.read(new File("diamond.gif"));
-				BOULDER = ImageIO.read(new File("boulder.gif"));
+				BOULDER = ImageIO.read(new File("fire.gif"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -233,8 +234,9 @@ public class JOI_View implements ActionListener{
 	}
 
 	public void setDelay(int i) {
-		timer.setDelay(timer.getDelay() + i);
-		
+		if(timer.getDelay() > MIN_DELAY){
+			timer.setDelay(timer.getDelay() + i);
+		}
 	}
 	
 }

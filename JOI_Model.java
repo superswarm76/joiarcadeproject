@@ -102,6 +102,7 @@ public class JOI_Model {
     public void moveUp() {
         int row = getRow();
         int col = getCol();
+        checkCollision(row, col);
         if(ifWalkable(row -1, col)){
             checkCollision(row - 1, col);
             sprites[row - 1][col] = PLAYER;
@@ -112,6 +113,7 @@ public class JOI_Model {
     public void moveDown() {
         int row = getRow();
         int col = getCol();
+        checkCollision(row, col);
         if(ifWalkable(row +1, col)){
             checkCollision(row + 1, col);
             sprites[row + 1][col] = PLAYER;
@@ -122,6 +124,7 @@ public class JOI_Model {
     public void moveRight() {
         int row = getRow();
         int col = getCol();
+        checkCollision(row, col);
         if(ifWalkable(row, col + 1)){
             checkCollision(row , col + 1);
             sprites[row][col + 1] = PLAYER;
@@ -132,6 +135,7 @@ public class JOI_Model {
     public void moveLeft() {
         int row = getRow();
         int col = getCol();
+        checkCollision(row, col);
         if(ifWalkable(row, col - 1)){
             checkCollision(row , col - 1);
             sprites[row][col - 1] = PLAYER;
